@@ -20,7 +20,7 @@ const Home: React.FC = () => {
           <p className="text-lg mb-4 text-white">
             Welcome to my game! Let's Play. Just start by clicking the button
           </p>
-          <button onClick={changePath} className="bg-pink-500 text-primary-50  py-2 px-6 rounded-md cursor-pointer font-bold text-white">
+          <button onClick={changePath} className="bg-purple-500 text-primary-50  py-2 px-6 rounded-md cursor-pointer font-bold text-white hover:bg-purple-600 transition duration-300">
             Start Game
           </button>
         </div>
