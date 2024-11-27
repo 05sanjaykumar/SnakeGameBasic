@@ -1,9 +1,10 @@
 import React from 'react'
 
+
 const Game:React.FC = () => {
   return (
-    <div>
-      hi this is Game
+    <div className='test'>
+      hi
     </div>
   )
 }
