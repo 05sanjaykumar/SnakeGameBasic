@@ -13,7 +13,7 @@ const Home: React.FC = () => {
       <div className="w-[800px] bg-gray-700 shadow-lg rounded-lg min-h-[600px] flex flex-col p-8 justify-center align-middle">
         {" "}
         <header className="flex justify-between items-center w-full mb-6">
-          <h1 className="font-title text-primary-950 text-2xl text-white">Snake Game 🐍</h1>
+          <h1 className="font-title text-primary-950 text-2xl text-white">Snake Game 🐍 By Sanjay Kumar</h1>
           <span className="text-primary-950 font-medium text-white">High Score: 1250</span>
         </header>
         <div className="flex flex-col items-center justify-center w-full flex-grow">
