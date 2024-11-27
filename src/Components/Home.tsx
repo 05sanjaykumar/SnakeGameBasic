@@ -9,18 +9,18 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className='flex justify-center align-middle h-lvh flex-col bg-[#f8f9fa]'>
-      <div className="w-[800px] bg-white shadow-lg rounded-lg min-h-[600px] flex flex-col items-center p-8 justify-center align-middle">
+    <div className='flex justify-center  h-screen flex-col bg-[#04111e] items-center overflow-hidden'>
+      <div className="w-[800px] bg-gray-700 shadow-lg rounded-lg min-h-[600px] flex flex-col p-8 justify-center align-middle">
         {" "}
         <header className="flex justify-between items-center w-full mb-6">
-          <h1 className="font-title text-primary-950 text-2xl">Game Page</h1>
-          <span className="text-primary-950 font-medium">High Score: 1250</span>
+          <h1 className="font-title text-primary-950 text-2xl text-white">Snake Game 🐍</h1>
+          <span className="text-primary-950 font-medium text-white">High Score: 1250</span>
         </header>
         <div className="flex flex-col items-center justify-center w-full flex-grow">
-          <p className="text-neutral-950 text-lg mb-4">
-            Welcome to the game! Aim for a new high score.
+          <p className="text-lg mb-4 text-white">
+            Welcome to my game! Let's Play. Just start by clicking the button
           </p>
-          <button onClick={changePath} className="bg-pink-500 text-primary-50 font-medium py-2 px-6 rounded-md cursor-pointer font-bold">
+          <button onClick={changePath} className="bg-pink-500 text-primary-50  py-2 px-6 rounded-md cursor-pointer font-bold text-white">
             Start Game
           </button>
         </div>
