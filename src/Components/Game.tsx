@@ -15,6 +15,30 @@ const App: React.FC = () => {
     col:Math.floor(Math.random()*COLS),
   })
 
+  useEffect(() => {
+    const Keyboard = (e:KeyboardEvent)=>{
+      if(e.key ==="ArrowUp" && direction!=="Down")
+      {
+        setDirection('Up')
+      }
+      else if(e.key ==="ArrowDown" && direction!=="Up")
+        {
+          setDirection('Down')
+        }
+      else if(e.key ==="ArrowLeft" && direction!=="Right")
+        {
+          setDirection('Left')
+        }
+      else if(e.key ==="ArrowRight" && direction!=="Left")
+        {
+          setDirection('Right')
+        }
+    }
+    document.addEventListener('keydown',Keyboard)
+    return () => document.removeEventListener('keydown', Keyboard);
+  }, [direction])
+  
+
   return (
     <div>
       Hello
