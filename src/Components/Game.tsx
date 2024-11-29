@@ -56,8 +56,11 @@ const Game:React.FC = () => {
   
 
   return (
-    <div className='test'>
-
+    <div className='game-container'>
+      <h1>Snake Game</h1>
+      <div className="nameboard">
+        
+      </div>
     </div>
   )
 }
