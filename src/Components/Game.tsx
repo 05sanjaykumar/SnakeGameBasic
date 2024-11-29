@@ -30,6 +30,31 @@ const Game:React.FC = () => {
     setScore(0);
   }
 
+  useEffect(() => {
+    const keyboard = (e:KeyboardEvent)=>{
+      switch(e.key)
+      {
+        case 'ArrowUp':
+          setDirection('UP');
+          break;
+        case 'ArrowDown':
+          setDirection('DOWN');
+          break;
+        case 'ArrowLeft':
+          setDirection('LEFT');
+          break;
+        case 'ArrowRight':
+          setDirection('RIGHT');
+          break;
+        default:
+          break;
+      }
+    }
+    document.addEventListener('keydown',keyboard);
+    
+  }, [])
+  
+
   return (
     <div className='test'>
 
