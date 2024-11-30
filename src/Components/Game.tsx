@@ -1,35 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 
 const ROWS = 20;
 const COLS = 25;
 
-const App: React.FC = () => {
-  const [snake, setSnake] = useState<{ row: number; col: number }[]>([{ row: 10, col: 10 }]);
+const App = () => {
+  const [snake, setSnake] = useState([{ row: 10, col: 10 }]);
   const [direction, setDirection] = useState('RIGHT');
-  const [food, setFood] = useState<{ row: number; col: number }>({ row: 5, col: 5 });
+  const [speed, setSpeed] = useState(200)
+  const [food, setFood] = useState({ row: 5, col: 5 });
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
 
-  // Generate food at random position
   const generateFood = () => ({
     row: Math.floor(Math.random() * ROWS),
     col: Math.floor(Math.random() * COLS),
   });
 
-  // Handle key press for direction
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowUp' && direction !== 'DOWN') setDirection('UP');
-      else if (e.key === 'ArrowDown' && direction !== 'UP') setDirection('DOWN');
-      else if (e.key === 'ArrowLeft' && direction !== 'RIGHT') setDirection('LEFT');
-      else if (e.key === 'ArrowRight' && direction !== 'LEFT') setDirection('RIGHT');
+    const handleKeyPress = (e:KeyboardEvent) => {
+      switch(e.key) {
+        case 'ArrowUp':
+          if (direction !== 'DOWN') setDirection('UP');
+          break;
+        case 'ArrowDown':
+          if (direction !== 'UP') setDirection('DOWN');
+          break;
+        case 'ArrowLeft':
+          if (direction !== 'RIGHT') setDirection('LEFT');
+          break;
+        case 'ArrowRight':
+          if (direction !== 'LEFT') setDirection('RIGHT');
+          break;
+      }
     };
 
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [direction]);
 
-  // Reset game state
   const resetGame = () => {
     setSnake([{ row: 10, col: 10 }]);
     setDirection('RIGHT');
@@ -38,78 +46,84 @@ const App: React.FC = () => {
     setScore(0);
   };
 
-  // Move the snake and check for collisions
+  const checkCollision = (newHead:any, snakeBody:any) => {
+
+    return snakeBody.some((segment:any, index:any) => 
+      index !== 0 && segment.row === newHead.row && segment.col === newHead.col
+    );
+  };
+
   const moveSnake = () => {
+    if (gameOver) return;
+
     const head = { ...snake[0] };
     const newSnake = [...snake];
 
-    // Move the head in the current direction
-    if (direction === 'UP') head.row -= 1;
-    else if (direction === 'DOWN') head.row += 1;
-    else if (direction === 'LEFT') head.col -= 1;
-    else if (direction === 'RIGHT') head.col += 1;
 
-    // Wrap around the board if the snake goes out of bounds
+    switch (direction) {
+      case 'UP':
+        head.row -= 1;
+        break;
+      case 'DOWN':
+        head.row += 1;
+        break;
+      case 'LEFT':
+        head.col -= 1;
+        break;
+      case 'RIGHT':
+        head.col += 1;
+        break;
+    }
+
+
     head.row = (head.row + ROWS) % ROWS;
     head.col = (head.col + COLS) % COLS;
 
-    console.log("Head Position:", head);
 
-    // Check for collision with the body
-    if (checkCollision(snake, head)) {
-      console.log("Collision Detected! Game Over!");
+    if (checkCollision(head, snake)) {
+      console.log('Collision detected!');
       setGameOver(true);
       return;
     }
 
-    // Add the new head to the snake
+    // Update snake position
     newSnake.unshift(head);
 
-    // Check if the snake eats food
+    // Check if food is eaten
     if (head.row === food.row && head.col === food.col) {
-      setScore((prevScore) => prevScore + 10);
+      setScore(prev => prev + 10);
       setFood(generateFood());
     } else {
-      newSnake.pop(); // Remove the tail
+      newSnake.pop();
     }
 
     setSnake(newSnake);
   };
 
-  // Check if the snake's head collides with its body
-  const checkCollision = (
-    snake: { row: number; col: number }[],
-    head: { row: number; col: number }
-  ) => {
-    return snake.some((part, index) => index !== 0 && part.row === head.row && part.col === head.col);
-  };
 
-  // Update the snake's position at intervals
   useEffect(() => {
     if (!gameOver) {
-      const interval = setInterval(moveSnake, 100);
-      return () => clearInterval(interval);
+      const gameInterval = setInterval(moveSnake, speed);
+      return () => clearInterval(gameInterval);
     }
-  }, [snake, direction, food, gameOver]);
+  }, [snake, direction, gameOver]); 
 
-  // Render the game board
   const renderBoard = () => {
     const board = [];
     for (let row = 0; row < ROWS; row++) {
       const cells = [];
       for (let col = 0; col < COLS; col++) {
-        let cellClass = '';
-        if (snake.some((part) => part.row === row && part.col === col)) {
-          cellClass = 'bg-green-500';
-        } else if (food.row === row && food.col === col) {
-          cellClass = 'bg-red-500';
-        }
-
+        const isSnake = snake.some(segment => segment.row === row && segment.col === col);
+        const isFood = food.row === row && food.col === col;
+        
         cells.push(
           <div
             key={`${row}-${col}`}
-            className={`w-8 h-8 border border-gray-600 ${cellClass}`}
-          ></div>
+            className={`w-8 h-8 border border-gray-800 ${
+              isSnake ? 'bg-green-500' : 
+              isFood ? 'bg-red-500' : 'bg-gray-900'
+            }`}
+          />
         );
       }
       board.push(
@@ -122,18 +136,34 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4 bg-black min-h-screen">
-      <h1 className="text-2xl font-bold text-white">Snake Game</h1>
-      <div className="flex flex-col">{renderBoard()}</div>
-      <div className="text-lg text-white mt-4">Score: {score}</div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
+      <h1 className="text-3xl font-bold text-white mb-4">Snake Game By Sanjay</h1>
+      {!gameOver && (
+        <div>
+          <div className="border-1 border-gray-700 p-1 bg-gray-800">
+            {renderBoard()}
+          </div>
+          <div className="text-xl text-white mt-4">Score: {score}</div>
+          <div className=' text-white flex flex-row justify-between '>
+            <button onClick={()=>setSpeed(500)}>Tortise speed</button>
+            <button onClick={()=>setSpeed(200)}>Low speed</button>
+            <button onClick={()=>setSpeed(100)}>Medium speed</button>
+            <button onClick={()=>setSpeed(50)}>High speed</button>
+            <button onClick={()=>setSpeed(20)} >Extreme speed</button>
+            <button onClick={()=>setSpeed(5)} >Light speed</button>
+            <button onClick={()=>setSpeed(0.01)} >Tachyon speed</button>
+          </div>
+        </div>
+      )}
       {gameOver && (
-        <div className="flex flex-col items-center mt-6 bg-gray-800 p-4 rounded">
-          <h2 className="text-xl font-bold text-red-500">Game Over</h2>
+        <div className="flex flex-col items-center mt-6 bg-gray-800 p-4 rounded-lg border-2 border-red-500">
+          <h2 className="text-2xl font-bold text-red-500">Game Over!</h2>
+          <p className="text-white mt-2">Final Score: {score}</p>
           <button
             onClick={resetGame}
-            className="mt-4 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="mt-4 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            Restart
+            Play Again
           </button>
         </div>
       )}
