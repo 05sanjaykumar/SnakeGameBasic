@@ -1,8 +1,18 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [highScore, setHighScore] = useState<number>(0); 
+
+  useEffect(() => {
+    const highScore = localStorage.getItem('highScore')
+    if(highScore)
+    {
+      setHighScore(parseInt(highScore, 10));
+    }
+  }, [])
+  
 
   const changePath = () => {
     navigate('/game'); 
@@ -14,7 +24,7 @@ const Home: React.FC = () => {
         {" "}
         <header className="flex justify-between items-center w-full mb-6">
           <h1 className="font-title text-primary-950 text-2xl text-white">Snake Game 🐍 By Sanjay Kumar</h1>
-          <span className="text-primary-950 font-medium text-white">High Score: 1250</span>
+          <span className="text-primary-950 font-medium text-white">High Score: {highScore}</span>
         </header>
         <div className="flex flex-col items-center justify-center w-full flex-grow">
           <p className="text-lg mb-4 text-white">

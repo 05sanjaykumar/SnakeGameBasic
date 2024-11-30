@@ -100,6 +100,14 @@ const App = () => {
     setSnake(newSnake);
   };
 
+  useEffect(() => {
+    if (gameOver) {
+      const savedHighScore = localStorage.getItem('highScore');
+      if (!savedHighScore || score > parseInt(savedHighScore, 10)) {
+        localStorage.setItem('highScore', score.toString());
+      }
+    }
+  }, [gameOver]);
 
   useEffect(() => {
     if (!gameOver) {
