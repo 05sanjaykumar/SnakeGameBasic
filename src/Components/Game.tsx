@@ -1,7 +1,7 @@
 import  { useState, useEffect } from 'react';
 
 const ROWS = 20;
-const COLS = 25;
+const COLS = 20;
 
 const App = () => {
   const [snake, setSnake] = useState([{ row: 10, col: 10 }]);
@@ -144,38 +144,39 @@ const App = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
-      <h1 className="text-3xl font-bold text-white mb-4">Snake Game By Sanjay</h1>
-      {!gameOver && (
-        <div>
-          <div className="border-1 border-gray-700 p-1 bg-gray-800">
-            {renderBoard()}
-          </div>
-          <div className="text-xl text-white mt-4">Score: {score}</div>
-          <div className=' text-white flex flex-row justify-between '>
-            <button onClick={()=>setSpeed(500)}>Tortise speed</button>
-            <button onClick={()=>setSpeed(200)}>Low speed</button>
-            <button onClick={()=>setSpeed(100)}>Medium speed</button>
-            <button onClick={()=>setSpeed(50)}>High speed</button>
-            <button onClick={()=>setSpeed(20)} >Extreme speed</button>
-            <button onClick={()=>setSpeed(5)} >Light speed</button>
-            <button onClick={()=>setSpeed(0.01)} >Tachyon speed</button>
-          </div>
-        </div>
-      )}
-      {gameOver && (
-        <div className="flex flex-col items-center mt-6 bg-gray-800 p-4 rounded-lg border-2 border-red-500">
-          <h2 className="text-2xl font-bold text-red-500">Game Over!</h2>
-          <p className="text-white mt-2">Final Score: {score}</p>
-          <button
-            onClick={resetGame}
-            className="mt-4 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-          >
-            Play Again
-          </button>
-        </div>
-      )}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4 overflow-y-auto">
+  <h1 className="text-3xl font-bold text-white mb-4">Snake Game By Sanjay</h1>
+  {!gameOver && (
+    <div className="flex flex-col items-center">
+      <div className="border-1 border-gray-700 p-1 bg-gray-800">
+        {renderBoard()}
+      </div>
+      <div className="text-xl text-white mt-4">Score: {score}</div>
+      <div className="text-white flex flex-wrap justify-center gap-4 mt-4">
+        <button onClick={() => setSpeed(500)}>Tortoise Speed</button>
+        <button onClick={() => setSpeed(200)}>Low Speed</button>
+        <button onClick={() => setSpeed(100)}>Medium Speed</button>
+        <button onClick={() => setSpeed(50)}>High Speed</button>
+        <button onClick={() => setSpeed(20)}>Extreme Speed</button>
+        <button onClick={() => setSpeed(5)}>Light Speed</button>
+        <button onClick={() => setSpeed(0.01)}>Tachyon Speed</button>
+      </div>
     </div>
+  )}
+  {gameOver && (
+    <div className="flex flex-col items-center mt-6 bg-gray-800 p-4 rounded-lg border-2 border-red-500">
+      <h2 className="text-2xl font-bold text-red-500">Game Over!</h2>
+      <p className="text-white mt-2">Final Score: {score}</p>
+      <button
+        onClick={resetGame}
+        className="mt-4 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+      >
+        Play Again
+      </button>
+    </div>
+  )}
+</div>
+
   );
 };
 
