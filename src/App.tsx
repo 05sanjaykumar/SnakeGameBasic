@@ -5,7 +5,7 @@ import Game from './Components/Game'
 function App() {
   return (
     <>
-     <Router basename='SnakeGameBasic'>
+     <Router basename='/SnakeGameBasic'>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/game" element={<Game />} />
