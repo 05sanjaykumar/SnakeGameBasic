@@ -1,4 +1,4 @@
-```markdown
+
 # Snake Game 🐍
 
 Welcome to the **Snake Game**! A fun and interactive game built using React.js, where you guide a snake to eat food, grow longer, and avoid collisions.
@@ -131,6 +131,3 @@ This project is licensed under the [MIT License](LICENSE).
 ## 👨‍💻 Author
 
 Created by [Sanjay Kumar](https://github.com/05sanjaykumar). If you like this project, feel free to ⭐ the repo and share it with others!
-```
-
----
