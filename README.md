@@ -108,7 +108,7 @@ This project is deployed using **GitHub Pages**. To deploy your own version:
 ## 🛑 Known Issues
 
 1. **Layout Issues**: On small screen sizes, some buttons may not be fully visible.
-2. **High Score Persistence**: High scores reset when the page reloads.
+2. **Higher Rerendering Persistence**: Still can be optimised.
 
 ## 🤝 Contributing
 
