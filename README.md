@@ -1,4 +1,4 @@
-Here's the **`README.md`** content as a single block that you can copy and paste directly:
+
 
 ---
 
